@@ -10,10 +10,27 @@ if (workbox) {
 //   handler: workboxSW.strategies.cacheFirst()
 // });
 
+var urlsToCache = [
+  '.',
+  'index.html',
+  'indexOffline.html',
+  'images/online.jpg',
+  'images/offline.jpg'
+];
+
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open('MAIN_CACHE')
+    .then(function(cache) {
+      return cache.addAll(urlsToCache);
+    })
+  );
+});
+
 const OFFLINE_FALLBACK_PAGE = '/indexOffline.html';
 
 workbox.routing.registerRoute(
-  new RegExp('http://127.0.0.1:8080/'),
+  new RegExp('/'),
   async ({event}) => {
     console.log('index.html route activated')
     try {
@@ -24,10 +41,10 @@ workbox.routing.registerRoute(
   }
 );
 
-const OFFLINE_FALLBACK_IMAGE = '/images/offline.jpg';
+const OFFLINE_FALLBACK_IMAGE = 'images/offline.jpg';
 
 workbox.routing.registerRoute(
-  new RegExp('/images/online.jpg'),
+  new RegExp('/images/'),
   async ({event}) => {
     console.log('images route activated')
     try {
