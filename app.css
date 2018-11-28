@@ -1,0 +1,21 @@
+html{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+h1, h2{
+    text-align: center
+}
+
+.container{
+    display:flex;
+    align-items: flex-start;
+    width: 60vw;
+    height: 80vh;
+    margin-left: 20vw;
+}
+
+.container>img{
+    object-fit: contain;
+    width: 60vw;
+}
